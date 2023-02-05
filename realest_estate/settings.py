@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',  # cors package
     'rest_framework',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    'realtors.apps.RealtorsConfig',
 ]
 
 MIDDLEWARE = [
