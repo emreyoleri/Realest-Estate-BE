@@ -1,5 +1,4 @@
 import base64
-from django.contrib.auth.models import User
 from realtors.models import Realtor
 from faker import Faker
 
