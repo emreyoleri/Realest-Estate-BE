@@ -1,9 +1,9 @@
-from rest_framework.generics import ListAPIView , RetrieveAPIView
+from rest_framework.generics import ListAPIView , RetrieveAPIView, CreateAPIView
 from rest_framework import permissions
 from .models import Realtor
 from .serializers import RealtorSerializer
 
-class RealtorListView(ListAPIView):
+class RealtorListView(ListAPIView , CreateAPIView):
     
     permission_classes = (permissions.AllowAny,)
     

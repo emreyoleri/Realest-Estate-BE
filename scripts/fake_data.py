@@ -1,5 +1,6 @@
 import base64
 from django.contrib.auth.models import User
+from realtors.models import Realtor
 from faker import Faker
 
 import django
@@ -39,7 +40,7 @@ def set_house():
         address = fake.street_address()
         
         data = dict(
-            realtor=random.randint(1, User.objects.count()),
+            realtor=random.randint(2, Realtor.objects.count()),
             slug=slugify(address),
             title=fake.street_name() + "House",
             address=address,
@@ -63,5 +64,40 @@ def set_house():
         data = res.json()
 
         print("data", data)
+
+def set_realtors():
+
+    fake = Faker(['en_US'])
+
+    for i in range(0, 10):
+
+        response = requests.get(
+            "https://pixabay.com/api/?key=22161424-08421d893c81fc01d6d419611&q=people+face&image_type=photo")
+
+        jsn = response.json()
+
+        url = jsn["hits"][i]["webformatURL"]
+
+        data = dict(
+            name = fake.name(),
+            photo = str(base64.b64encode(requests.get(url).content).decode('ASCII')),
+            description=fake.paragraph(nb_sentences=10),
+            phone=fake.phone_number(),
+            email=fake.email(),
+            top_seller=fake.pybool(),
+        )
+
+
+        json_object = json.dumps(data, indent=4)
+
+        res = requests.post("http://127.0.0.1:8000/api/realtors/", headers={
+                            'Content-Type': 'application/json', 'charset': 'utf-8'}, data=json_object)
+        data = res.json()
+
+        print("data", data)
+
+
+
+
 
         
